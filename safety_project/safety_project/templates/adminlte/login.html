@@ -1,43 +1,92 @@
-{% extends "adminlte/base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }} | Safety App</title>
 
-{% block title %}Login | Safety App{% endblock %}
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="{% static 'adminlte/css/adminlte.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-{% block content %}
-<div class="login-box" style="margin-top: 100px;">
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="#" class="h1"><b>Safety</b>App</a>
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .login-box {
+            margin-top: 7%;
+        }
+        .login-logo a {
+            color: #007bff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><b>Safety</b>App</a>
     </div>
-    <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+    <!-- /.login-logo -->
+    <div class="card shadow">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
 
-      <form method="post" action="">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        Invalid username or password.
+                    </div>
+                {% endif %}
 
-        <div class="input-group mb-3">
-          {{ form.username }}
-          <div class="input-group-append">
-            <div class="input-group-text"><span class="fas fa-user"></span></div>
-          </div>
+                <div class="input-group mb-3">
+                    <input type="text" name="username" class="form-control" placeholder="Username" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember Me</label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <p class="mb-1 mt-3 text-center">
+                <a href="#">Forgot password?</a>
+            </p>
         </div>
-
-        <div class="input-group mb-3">
-          {{ form.password }}
-          <div class="input-group-append">
-            <div class="input-group-text"><span class="fas fa-lock"></span></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-8"></div>
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-        </div>
-      </form>
+        <!-- /.login-card-body -->
     </div>
-  </div>
 </div>
-{% endblock %}
+
+<!-- AdminLTE JS -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'adminlte/js/a
