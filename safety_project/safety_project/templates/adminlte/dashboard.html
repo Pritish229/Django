@@ -1,0 +1,94 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+
+{% block title %}Safety App RBAC Dashboard{% endblock %}
+
+{% block page_title %}RBAC Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Roles Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Roles</h3>
+                </div>
+                <div class="card-body">
+                    {% if roles %}
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for role in roles %}
+                            <tr>
+                                <td>{{ role.name }}</td>
+                                <td>{{ role.description|truncatewords:10 }}</td>
+                                <td>{{ role.created_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No roles available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Users</h3>
+                </div>
+                <div class="card-body">
+                    {% if users %}
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Contact</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for profile in users %}
+                            <tr>
+                                <td>
+                                    {% if profile.user %}
+                                        {{ profile.user.get_full_name|default:profile.user.username }}
+                                    {% else %}
+                                        Anonymous
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if profile.role %}
+                                        {{ profile.role.name }}
+                                    {% else %}
+                                        No Role
+                                    {% endif %}
+                                </td>
+                                <td>{{ profile.contact_no|default:"N/A" }}</td>
+                                <td>{{ profile.created_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No user profiles available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
